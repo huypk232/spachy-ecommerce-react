@@ -8,7 +8,8 @@ import {
   useDocumentTitle,
   useProduct,
   useRecommendedProducts,
-  useScrollTop
+  useScrollTop,
+  useShop
 } from '@/hooks';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -18,6 +19,7 @@ const ViewProduct = () => {
   const { id } = useParams();
   const { product, isLoading, error } = useProduct(id);
   const { addToBasket, isItemOnBasket } = useBasket(id);
+  const { addToShop, isItemOnShop } = useShop(id);
   useScrollTop();
   useDocumentTitle(`View ${product?.name || 'Item'}`);
 
@@ -52,6 +54,9 @@ const ViewProduct = () => {
     addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.sizes[0] });
   };
 
+  const handleAddToShop = () => {
+    addToShop({ ...product, selectedColor, selectedSize: product.sizes[0] })
+  };
   return (
     <main className="content">
       {isLoading && (
@@ -73,7 +78,7 @@ const ViewProduct = () => {
             </h3>
           </Link>
           <div className="product-modal">
-            {product.imageCollection.length !== 0 && (
+            {/* {product.imageCollection.length !== 0 && (
               <div className="product-modal-image-collection">
                 {product.imageCollection.map((image) => (
                   <div
@@ -89,15 +94,15 @@ const ViewProduct = () => {
                   </div>
                 ))}
               </div>
-            )}
-            <div className="product-modal-image-wrapper">
+            )} */}
+            {/* <div className="product-modal-image-wrapper">
               {selectedColor && <input type="color" disabled ref={colorOverlay} id="color-overlay" />}
               <ImageLoader
                 alt={product.name}
                 className="product-modal-image"
                 src={selectedImage}
               />
-            </div>
+            </div> */}
             <div className="product-modal-details">
               <br />
               <span className="text-subtle">{product.brand}</span>
@@ -138,6 +143,13 @@ const ViewProduct = () => {
                   type="button"
                 >
                   {isItemOnBasket(product.id) ? 'Remove From Basket' : 'Add To Basket'}
+                </button>
+                <button
+                  className={`product-add-to-shop-button button-small button button-block ${isItemOnShop(product.id) ? 'button-border button-border-gray' : ''}`}
+                  onClick={handleAddToShop}
+                  type="button"
+                >
+                  {isItemOnShop(product.id) ? 'Remove from shop' : 'Add to shop'}
                 </button>
               </div>
             </div>

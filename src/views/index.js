@@ -16,5 +16,10 @@ export { default as Home } from './home';
 export { default as RecommendedProducts } from './recommended';
 export { default as Search } from './search';
 export { default as Shop } from './shop';
+export { default as PersonalShop} from './personal_shop/PersonalShop';
+export { default as UpsertShop } from './personal_shop/UpsertShop';
 export { default as ViewProduct } from './view_product';
+export { default as ViewWarehouse } from './warehouse';
+export { default as Order } from './order';
+export { default as SellProductRequest } from './sell_product_request';
 

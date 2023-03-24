@@ -76,6 +76,10 @@
   bottom: 0;
 }
 
+.product-card:hover .product-add-to-shop-button {
+  bottom: 0;
+}
+
 .product-card:hover .product-card-img-wrapper {
   height: 8rem;
   padding: 1rem;
@@ -155,6 +159,22 @@
 
 .product-card-button {
   // text-transform: uppercase;
+  width: 50%;
+  position: absolute;
+  bottom: -100%;
+  font-size: $font-small;
+  transition: all .4s ease-in-out;
+
+  @include mobile {
+    bottom: 0;
+    display: none;
+  }
+}
+
+.product-add-to-shop-button {
+  // text-transform: uppercase;
+  width: 50%;
+  right: 0%;
   position: absolute;
   bottom: -100%;
   font-size: $font-small;

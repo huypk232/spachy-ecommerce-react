@@ -12,8 +12,11 @@ export default (state = initState, action) => {
     case SIGNIN_SUCCESS:
       return {
         id: action.payload.id,
+        shopId: action.payload.shopId,
+        shop: action.payload.shop,
         role: action.payload.role,
-        provider: action.payload.provider
+        provider: action.payload.provider,
+        warehouseId: action.payload.warehouseId
       };
     case SIGNOUT_SUCCESS:
       return null;

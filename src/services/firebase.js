@@ -94,8 +94,13 @@ class Firebase {
       });
     });
 
-  saveBasketItems = (items, userId) =>
+  saveBasketItems = (items, userId) => {
     this.db.collection("users").doc(userId).update({ basket: items });
+  }
+
+  saveShopProducts = (items, userId) => {
+    this.db.collection("users").doc(userId).field(shop).update({ products: items });
+  }
 
   setAuthPersistence = () =>
     this.auth.setPersistence(app.auth.Auth.Persistence.LOCAL);
@@ -244,16 +249,27 @@ class Firebase {
       .limit(itemsCount)
       .get();
 
+  getWarehouseProducts = (warehouseId, itemsCount = 100) =>
+    this.db
+      .collection("products")
+      .where("warehouseId", "==", warehouseId)
+      .limit(itemsCount)
+      .get();
+
   addProduct = (id, product) =>
     this.db.collection("products").doc(id).set(product);
 
   generateKey = () => this.db.collection("products").doc().id;
 
   storeImage = async (id, folder, imageFile) => {
-    const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
-    const downloadURL = await snapshot.ref.getDownloadURL();
+    // const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
 
-    return downloadURL;
+    // const preSnapshot = this.storage.ref(folder).child(id);
+    // // console.log("pass")
+    // const snapshot = await preSnapshot.put(imageFile, metadata);
+    // const downloadURL = await snapshot.ref.getDownloadURL();
+
+    return "downloadURL";
   };
 
   deleteImage = (id) => this.storage.ref("products").child(id).delete();
@@ -262,6 +278,25 @@ class Firebase {
     this.db.collection("products").doc(id).update(updates);
 
   removeProduct = (id) => this.db.collection("products").doc(id).delete();
+
+  // sell product request
+  getVendorRequests = (userId, itemsCount = 100) => 
+    this.db.collection("sellProductRequest")
+    .where("vendorId", "==", userId)
+    .limit(itemsCount)
+    .get();
+
+  // shop
+  generateShopKey = () => this.db.collection("shops").doc().id;
+
+  createShop = (id, shop) =>
+    this.db.collection("users").doc(id).set(shop);
+
+  saveSellerShopProducts = (items, shopId) => 
+    this.db.collection("shops").doc(shopId).update({ products: items });
+
+  getUserShop = (shopId) => 
+    this.db.collection("shops").doc(shopId).get();
 }
 
 const firebaseInstance = new Firebase();

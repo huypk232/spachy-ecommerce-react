@@ -6,7 +6,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { selectFilter } from '@/selectors/selector';
 
 const Shop = () => {
-  useDocumentTitle('Shop | Salinaka');
+  useDocumentTitle('Market | Spachy');
   useScrollTop();
 
   const store = useSelector((state) => ({
@@ -29,3 +29,6 @@ const Shop = () => {
 };
 
 export default Shop;
+
+
+// todo rename to market

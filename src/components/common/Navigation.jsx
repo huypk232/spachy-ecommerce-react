@@ -51,7 +51,11 @@ const Navigation = () => {
     ROUTE.CHECKOUT_STEP_3,
     ROUTE.SIGNIN,
     ROUTE.SIGNUP,
-    ROUTE.FORGOT_PASSWORD
+    ROUTE.FORGOT_PASSWORD,
+    ROUTE.WARE_HOUSE,
+    // ROUTE.PRODUCT_REQUEST,
+    ROUTE.ORDER,
+    ROUTE.SELL_PRODUCT_REQUEST,
   ];
 
   if (store.user && store.user.role === 'ADMIN') {
@@ -71,12 +75,45 @@ const Navigation = () => {
       <div className="logo">
         <Link onClick={onClickLink} to="/"><img alt="Logo" src={logo} /></Link>
       </div>
-      <ul className="navigation-menu-main">
-        <li><NavLink activeClassName="navigation-menu-active" exact to={ROUTE.HOME}>Home</NavLink></li>
-        <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>Shop</NavLink></li>
-        <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.FEATURED_PRODUCTS}>Featured</NavLink></li>
-        <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
-      </ul>
+      {store.user === undefined || store.user === null ?
+        (
+          <ul className="navigation-menu-main">
+            <li><NavLink activeClassName="navigation-menu-active" exact to={ROUTE.HOME}>Home</NavLink></li>
+            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.FEATURED_PRODUCTS}>Featured</NavLink></li>
+            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
+            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>Shop</NavLink></li>
+          </ul>
+        ) : 
+        ((store.user.role === "PARTNER") && (
+        <ul className="navigation-menu-main">
+          <li><NavLink activeClassName="navigation-menu-active" exact to={ROUTE.HOME}>Home</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.MARKET}>Market</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.FEATURED_PRODUCTS}>Featured</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>Product</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.PERSONAL_SHOP}>Shop</NavLink></li>
+        </ul>
+        ) || 
+        (store.user.role === "VENDOR") && (
+        <ul className="navigation-menu-main">
+          <li><NavLink activeClassName="navigation-menu-active" exact to={ROUTE.HOME}>Home</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.MARKET}>Market</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.FEATURED_PRODUCTS}>Featured</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.WAREHOUSE}>Warehouse</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SELL_PRODUCT_REQUEST}>Request</NavLink></li>
+        </ul>
+        ) || 
+        (store.user.role === "CUSTOMER") && (
+          <ul className="navigation-menu-main">
+            <li><NavLink activeClassName="navigation-menu-active" exact to={ROUTE.HOME}>Home</NavLink></li>
+            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.FEATURED_PRODUCTS}>Featured</NavLink></li>
+            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
+            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.WAREHOUSE}>Warehouse</NavLink></li>
+            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.ORDER}>Order</NavLink></li>
+          </ul>
+        ))
+      }
       {(pathname === ROUTE.SHOP || pathname === ROUTE.SEARCH) && (
         <FiltersToggle>
           <button className="button-muted button-small" type="button">

@@ -10,10 +10,13 @@ export const setBasketItems = (items = []) => ({
   payload: items
 });
 
-export const addToBasket = (product) => ({
-  type: ADD_TO_BASKET,
-  payload: product
-});
+export const addToBasket = (product) => {
+  // console.log(product)
+  return ({
+    type: ADD_TO_BASKET,
+    payload: product
+  })
+};
 
 export const removeFromBasket = (id) => ({
   type: REMOVE_FROM_BASKET,

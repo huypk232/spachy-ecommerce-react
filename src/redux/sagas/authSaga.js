@@ -12,6 +12,7 @@ import defaultBanner from '@/images/defaultBanner.jpg';
 import { call, put } from 'redux-saga/effects';
 import { signInSuccess, signOutSuccess } from '@/redux/actions/authActions';
 import { clearBasket, setBasketItems } from '@/redux/actions/basketActions';
+import { setShop } from '@/redux/actions/shopActions';
 import { resetCheckout } from '@/redux/actions/checkoutActions';
 import { resetFilter } from '@/redux/actions/filterActions';
 import { setAuthenticating, setAuthStatus } from '@/redux/actions/miscActions';
@@ -142,17 +143,27 @@ function* authSaga({ type, payload }) {
     }
     case ON_AUTHSTATE_SUCCESS: {
       const snapshot = yield call(firebase.getUser, payload.uid);
-
       if (snapshot.data()) { // if user exists in database
         const user = snapshot.data();
-
+        const shopId = user.shopId
         yield put(setProfile(user));
         yield put(setBasketItems(user.basket));
-        yield put(setBasketItems(user.basket));
+        var shop = null;
+        if (shopId){
+          const shopSnapshot = yield call(firebase.getUserShop, shopId);
+          const shopData = shopSnapshot.data();
+          if (shopData) {
+            yield put(setShop(shopData));
+            shop = shopData;
+          }
+        }
         yield put(signInSuccess({
           id: payload.uid,
           role: user.role,
-          provider: payload.providerData[0].providerId
+          provider: payload.providerData[0].providerId,
+          shopId: user.shopId,
+          shop: shop,
+          warehouseId: user.warehouseId
         }));
       } else if (payload.providerData[0].providerId !== 'password' && !snapshot.data()) {
         // add the user if auth provider is not password

@@ -1,5 +1,11 @@
 export const HOME = '/';
 export const SHOP = '/shop';
+export const MARKET = '/market';
+export const PERSONAL_SHOP = '/personal_shop';
+export const UPSERT_SHOP = '/personal_shop/upsert';
+export const WAREHOUSE = '/warehouses';
+export const SELL_PRODUCT_REQUEST = '/sell_product_requests';
+export const ORDER = '/order';
 export const FEATURED_PRODUCTS = '/featured';
 export const RECOMMENDED_PRODUCTS = '/recommended';
 export const ACCOUNT = '/account';

@@ -18,7 +18,9 @@ export const setRequestStatus = (status) => ({
 });
 
 
-export const setAuthStatus = (status = null) => ({
+export const setAuthStatus = (status = null) => {
+  // console.log(status);
+  return ({
   type: SET_AUTH_STATUS,
   payload: status
-});
+})};

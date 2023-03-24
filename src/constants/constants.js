@@ -11,6 +11,7 @@ export const EDIT_PRODUCT_SUCCESS = 'EDIT_PRODUCT_SUCCESS';
 export const CANCEL_GET_PRODUCTS = 'CANCEL_GET_PRODUCTS';
 export const CLEAR_SEARCH_STATE = 'CLEAR_SEARCH_STATE';
 export const SET_LAST_REF_KEY = 'SET_LAST_REF_KEY';
+export const PRODUCT_REQUEST = 'PRODUCT_REQUEST'; // request add vendor product to partner shop
 
 export const SET_BASKET_ITEMS = 'SET_BASKET_ITEMS';
 export const ADD_TO_BASKET = 'ADD_TO_BASKET';
@@ -53,6 +54,20 @@ export const RESET_FILTER = 'RESET_FILTER';
 export const APPLY_FILTER = 'APPLY_FILTER';
 export const CLEAR_RECENT_SEARCH = 'CLEAR_RECENT_SEARCH';
 export const REMOVE_SELECTED_RECENT = 'REMOVE_SELECTED_RECENT';
+
+// SHOP
+export const SET_SHOP_ITEMS = 'SET_SHOP_ITEMS';
+export const SET_SHOP = 'SET_SHOP';
+export const ADD_TO_SHOP = 'ADD_TO_SHOP';
+export const ADD_SHOP = 'ADD_SHOP';
+export const ADD_SHOP_SUCCESS = 'ADD_SHOP_SUCCESS';
+export const REMOVE_FROM_SHOP = 'REMOVE_FROM_SHOP';
+export const GET_USER_SHOP = 'GET_USER_SHOP';
+export const GET_USER_SHOP_SUCCESS = 'GET_USER_SHOP_SUCCESS';
+export const GET_SHOPS = 'GET_SHOPS';
+export const SEARCH_SHOP = 'SEARCH_SHOP';
+export const SEARCH_SHOP_SUCCESS = 'SEARCH_SHOP_SUCCESS';
+export const GET_SHOPS_SUCCESS = 'GET_SHOPS_SUCCESS';
 
 export const REGISTER_USER = 'REGISTER_USER';
 export const GET_USER = 'GET_USER';

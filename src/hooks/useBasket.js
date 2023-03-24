@@ -5,9 +5,8 @@ import { addToBasket as dispatchAddToBasket, removeFromBasket } from '@/redux/ac
 const useBasket = () => {
   const { basket } = useSelector((state) => ({ basket: state.basket }));
   const dispatch = useDispatch();
-
+  // console.log("basket:", basket)
   const isItemOnBasket = (id) => !!basket.find((item) => item.id === id);
-
   const addToBasket = (product) => {
     if (isItemOnBasket(product.id)) {
       dispatch(removeFromBasket(product.id));

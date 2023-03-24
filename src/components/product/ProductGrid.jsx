@@ -1,10 +1,14 @@
-import { useBasket } from '@/hooks';
+import { useBasket, useShop } from '@/hooks';
 import PropType from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import ProductItem from './ProductItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDocumentTitle, useScrollTop, useDidMount } from '@/hooks';
+import { selectPersonalShopFilter } from '@/selectors/selector';
 
 const ProductGrid = ({ products }) => {
   const { addToBasket, isItemOnBasket } = useBasket();
+  const { addToShop, isItemOnShop } = useShop();
 
   return (
     <div className="product-grid">
@@ -19,6 +23,8 @@ const ProductGrid = ({ products }) => {
           key={product.id}
           isItemOnBasket={isItemOnBasket}
           addToBasket={addToBasket}
+          addToShop={addToShop}
+          isItemOnShop={isItemOnShop}
           product={product}
         />
       ))}

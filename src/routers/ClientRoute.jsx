@@ -13,7 +13,7 @@ const PrivateRoute = ({
   <Route
     {...rest}
     component={(props) => {
-      if (isAuth && role === 'USER') {
+      if (isAuth && role !== 'USER') {
         return (
           <main className="content">
             <Component {...props} />
@@ -24,7 +24,7 @@ const PrivateRoute = ({
       if (isAuth && role === 'ADMIN') {
         return <Redirect to={ADMIN_DASHBOARD} />;
       }
-
+      console.log(props);
       return (
         <Redirect to={{
           pathname: SIGNIN,

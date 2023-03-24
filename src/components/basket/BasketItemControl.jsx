@@ -54,7 +54,7 @@ BasketItemControl.propTypes = {
     selectedSize: PropType.string,
     selectedColor: PropType.string,
     imageCollection: PropType.arrayOf(PropType.string),
-    sizes: PropType.arrayOf(PropType.number),
+    sizes: PropType.arrayOf(PropType.string),
     image: PropType.string,
     imageUrl: PropType.string,
     isFeatured: PropType.bool,

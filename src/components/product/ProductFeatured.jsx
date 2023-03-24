@@ -11,12 +11,12 @@ const ProductFeatured = ({ product }) => {
 
     history.push(`/product/${product.id}`);
   };
-
+  // console.log(product);
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div className="product-display" onClick={onClickItem} role="presentation">
         <div className="product-display-img">
-          {product.image ? (
+          {product?.image ? (
             <ImageLoader
               className="product-card-img"
               src={product.image}
@@ -24,9 +24,9 @@ const ProductFeatured = ({ product }) => {
           ) : <Skeleton width="100%" height="100%" />}
         </div>
         <div className="product-display-details">
-          <h2>{product.name || <Skeleton width={80} />}</h2>
+          <h2>{product?.name || <Skeleton width={80} />}</h2>
           <p className="text-subtle text-italic">
-            {product.brand || <Skeleton width={40} />}
+            {product?.brand || <Skeleton width={40} />}
           </p>
         </div>
       </div>

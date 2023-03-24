@@ -35,6 +35,21 @@ const AppRouter = () => (
           path={ROUTES.SHOP}
         />
         <Route
+          component={view.Shop}
+          exact
+          path={ROUTES.MARKET}
+        />
+        <Route
+          component={view.PersonalShop}
+          exact
+          path={ROUTES.PERSONAL_SHOP}
+        />
+        <Route
+          component={view.UpsertShop}
+          exact
+          path={ROUTES.UPSERT_SHOP}
+        />
+        <Route
           component={view.FeaturedProducts}
           exact
           path={ROUTES.FEATURED_PRODUCTS}
@@ -43,6 +58,21 @@ const AppRouter = () => (
           component={view.RecommendedProducts}
           exact
           path={ROUTES.RECOMMENDED_PRODUCTS}
+        />
+        <Route
+          component={view.ViewWarehouse}
+          exact
+          path={ROUTES.WAREHOUSE}
+        />
+        <Route
+          component={view.Order}
+          exact
+          path={ROUTES.ORDER}
+        />
+        <Route
+          component={view.SellProductRequest}
+          exact
+          path={ROUTES.SELL_PRODUCT_REQUEST}
         />
         <PublicRoute
           component={view.SignUp}
