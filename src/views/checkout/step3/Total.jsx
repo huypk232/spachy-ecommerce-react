@@ -4,14 +4,24 @@ import { useFormikContext } from 'formik';
 import { displayMoney } from '@/helpers/utils';
 import PropType from 'prop-types';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setPaymentDetails } from '@/redux/actions/checkoutActions';
 
+import firebase from '@/services/firebase'
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { ORDER } from '@/constants/routes';
+import { clearBasket } from '@/redux/actions/basketActions';
+
+
 const Total = ({ isInternational, subtotal }) => {
+
   const { values, submitForm } = useFormikContext();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { basket, user } = useSelector((state) => ({
+    basket: state.basket,
+    user: state.auth
+  }));
 
   const onClickBack = () => {
     // destructure to only select left fields omitting cardnumber and ccv
@@ -19,6 +29,25 @@ const Total = ({ isInternational, subtotal }) => {
 
     dispatch(setPaymentDetails({ ...rest })); // save payment details
     history.push(CHECKOUT_STEP_2);
+  };
+
+  const onClearBasket = () => {
+    if (basket.length !== 0) {
+    }
+  };
+
+  const onConfirm = () => {
+    const key = firebase.generateOrderKey()
+    const order = {
+      "basket": basket,
+      "userId": user.id
+    } 
+    console.log(key)
+    firebase.createOrder(key, order)
+    firebase.saveBasketItems([], user.id)
+    dispatch(clearBasket());
+
+    history.push(ORDER)
   };
 
   return (
@@ -43,7 +72,7 @@ const Total = ({ isInternational, subtotal }) => {
         <button
           className="button"
           disabled={false}
-          onClick={submitForm}
+          onClick={onConfirm}
           type="button"
         >
           <CheckOutlined />

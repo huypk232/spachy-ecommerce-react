@@ -4,13 +4,18 @@ import { displayActionMessage } from '@/helpers/utils';
 import { useDocumentTitle, useScrollTop } from '@/hooks';
 import PropType from 'prop-types';
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { StepTracker } from '../components';
 import withCheckout from '../hoc/withCheckout';
 import CreditPayment from './CreditPayment';
 import PayPalPayment from './PayPalPayment';
 import Total from './Total';
+
+import firebase from '@/services/firebase'
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { ORDER } from '@/constants/routes';
+
 
 const FormSchema = Yup.object().shape({
   name: Yup.string()
@@ -32,6 +37,11 @@ const FormSchema = Yup.object().shape({
 const Payment = ({ shipping, payment, subtotal }) => {
   useDocumentTitle('Check Out Final Step | Salinaka');
   useScrollTop();
+  const { basket, user } = useSelector((state) => ({
+    basket: state.basket,
+    user: state.auth
+  }));
+  const history = useHistory();
 
   const initFormikValues = {
     name: payment.name || '',
@@ -42,7 +52,17 @@ const Payment = ({ shipping, payment, subtotal }) => {
   };
 
   const onConfirm = () => {
-    displayActionMessage('Feature not ready yet :)', 'info');
+    displayActionMessage('Order has created');
+    console.log("wht")
+
+    // const key = firebase.generateKey
+    // const order = {
+    //   "basket": basket,
+    //   "userId": user.id
+    // } 
+    // firebase.createOrder(key, order)
+    // firebase.saveBasketItems(null, user.id)
+    history.push(ORDER)
   };
 
   if (!shipping || !shipping.isDone) {
@@ -53,11 +73,14 @@ const Payment = ({ shipping, payment, subtotal }) => {
       <StepTracker current={3} />
       <Formik
         initialValues={initFormikValues}
-        validateOnChange
+        // validateOnChange
         validationSchema={FormSchema}
         validate={(form) => {
-          if (form.type === 'paypal') {
+          if (form.type !== 'paypal') {
             displayActionMessage('Feature not ready yet :)', 'info');
+          } else {
+            console.log("why not submit")
+
           }
         }}
         onSubmit={onConfirm}

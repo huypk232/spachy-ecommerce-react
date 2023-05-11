@@ -1,9 +1,9 @@
 /* eslint-disable indent */
 import {
-  GET_USER_SHOP,
-  GET_USER_SHOP_SUCCESS
+  GET_USER_request,
+  GET_USER_request_SUCCESS
 } from '@/constants/constants';
-// import { ADMIN_SHOPS } from '@/constants/routes';
+// import { ADMIN_requestS } from '@/constants/routes';
 import { displayActionMessage } from '@/helpers/utils';
 import {
   all, call, put, select
@@ -12,8 +12,8 @@ import { setLoading, setRequestStatus } from '@/redux/actions/miscActions';
 import { history } from '@/routers/AppRouter';
 import firebase from '@/services/firebase';
 import {
-  getUserShop, getUserShopSuccess
-} from '../actions/shopActions';
+  getUserrequest, getUserrequestSuccess
+} from '../actions/requestActions';
 
 function* initRequest() {
   yield put(setLoading(true));
@@ -22,7 +22,7 @@ function* initRequest() {
 
 function* handleError(e) {
   yield put(setLoading(false));
-  yield put(setRequestStatus(e?.message || 'Failed to fetch shops'));
+  yield put(setRequestStatus(e?.message || 'Failed to fetch requests'));
   console.log('ERROR: ', e);
 }
 
@@ -31,15 +31,16 @@ function* handleAction(location, message, status) {
   yield call(displayActionMessage, message, status);
 }
 
-function* shopSaga({ type, payload }) {
+function* requestSaga({ type, payload }) {
   switch (type) {
-    case GET_USER_SHOP:
+    case GET_REQUEST:
       try {
         yield initRequest();
         const state = yield select();
-        const result = yield call(firebase.getUserShop, payload.shopId);
-        yield put(getUserShopSuccess({
-          shop: result.shop
+        const result = yield call(firebase.getPartnerRequest, payload);
+
+        yield put(getUserrequestSuccess({
+          request: result.request
         }));
         yield put(setRequestStatus(''));
         yield put(setLoading(false));
@@ -49,31 +50,31 @@ function* shopSaga({ type, payload }) {
       }
       break;
       
-    case GET_USER_SHOP_SUCCESS:
-      const snapshot = yield call(firebase.getUserShop, payload.shopId);
+    case GET_REQUEST_SUCCESS:
+      const snapshot = yield call(firebase.getUserrequest, payload.requestId);
 
       if (snapshot.data()) { // if user exists in database
-        const shop = snapshot.data();
-        yield put(setShop(shop));
+        const request = snapshot.data();
+        yield put(setrequest(request));
       } else {
-        console.log("There is no shop")
+        console.log("There is no request")
       }
-      console.log("There is no shop")
+      console.log("There is no request")
 
-    case ADD_SHOP: {
+    case ADD_request: {
       try {
         yield initRequest();
 
         const key = yield call(firebase.generateKey);
 
-        const shop = {
+        const request = {
           ...payload,
         };
 
-        yield call(firebase.addshop, key, shop);
-        yield put(addshopSuccess({
+        yield call(firebase.addrequest, key, request);
+        yield put(addrequestSuccess({
           id: key,
-          ...shop
+          ...request
         }));
         yield put(setLoading(false));
       } catch (e) {
@@ -82,29 +83,7 @@ function* shopSaga({ type, payload }) {
       }
       break;
     }
-    case ADD_TO_SHOP: {
-      try {
-        yield initRequest();
-
-        const key = yield call(firebase.saveShopProducts);
-
-        const shop = {
-          ...payload,
-        };
-
-        yield call(firebase.saveShopProducts, items, userId);
-        // yield put(addshopSuccess({
-        //   id: key,
-        //   ...shop
-        // }));
-        yield put(setLoading(false));
-      } catch (e) {
-        yield handleError(e);
-        yield handleAction(undefined, `Item failed to add: ${e?.message}`, 'error');
-      }
-      break;
-    }
-    case EDIT_SHOP: {
+    case EDIT_request: {
       try {
         yield initRequest();
 
@@ -118,7 +97,7 @@ function* shopSaga({ type, payload }) {
             console.error('Failed to delete image ', e);
           }
 
-          const url = yield call(firebase.storeImage, payload.id, 'shop', image);
+          const url = yield call(firebase.storeImage, payload.id, 'request', image);
           newUpdates = { ...newUpdates, image: url };
         }
 
@@ -135,7 +114,7 @@ function* shopSaga({ type, payload }) {
           });
 
           const imageKeys = yield all(newUploads.map(() => firebase.generateKey));
-          const imageUrls = yield all(newUploads.map((img, i) => firebase.storeImage(imageKeys[i](), 'shop', img.file)));
+          const imageUrls = yield all(newUploads.map((img, i) => firebase.storeImage(imageKeys[i](), 'request', img.file)));
           const images = imageUrls.map((url, i) => ({
             id: imageKeys[i](),
             url
@@ -150,12 +129,12 @@ function* shopSaga({ type, payload }) {
           // make sure you're adding the url not the file object.
         }
 
-        yield call(firebase.editshop, payload.id, newUpdates);
-        yield put(editshopSuccess({
+        yield call(firebase.editrequest, payload.id, newUpdates);
+        yield put(editrequestSuccess({
           id: payload.id,
           updates: newUpdates
         }));
-        // yield handleAction(ADMIN_shopS, 'Item succesfully edited', 'success');
+        // yield handleAction(ADMIN_requestS, 'Item succesfully edited', 'success');
         yield put(setLoading(false));
       } catch (e) {
         yield handleError(e);
@@ -163,36 +142,36 @@ function* shopSaga({ type, payload }) {
       }
       break;
     }
-    case REMOVE_SHOP: {
+    case REMOVE_request: {
       try {
         yield initRequest();
-        yield call(firebase.removeshop, payload);
-        yield put(removeshopSuccess(payload));
+        yield call(firebase.removerequest, payload);
+        yield put(removerequestSuccess(payload));
         yield put(setLoading(false));
-        yield handleAction(ADMIN_shopS, 'Item succesfully removed', 'success');
+        yield handleAction(ADMIN_requestS, 'Item succesfully removed', 'success');
       } catch (e) {
         yield handleError(e);
         yield handleAction(undefined, `Item failed to remove: ${e.message}`, 'error');
       }
       break;
     }
-    case SEARCH_SHOP: {
+    case SEARCH_request: {
       try {
         yield initRequest();
         // clear search data
         yield put(clearSearchState());
 
         const state = yield select();
-        const result = yield call(firebase.searchshops, payload.searchKey);
+        const result = yield call(firebase.searchrequests, payload.searchKey);
 
-        if (result.shops.length === 0) {
-          yield handleError({ message: 'No shop found.' });
+        if (result.requests.length === 0) {
+          yield handleError({ message: 'No request found.' });
           yield put(clearSearchState());
         } else {
-          yield put(searchshopSuccess({
-            shops: result.shops,
-            lastKey: result.lastKey ? result.lastKey : state.shops.searchedshops.lastRefKey,
-            total: result.total ? result.total : state.shops.searchedshops.total
+          yield put(searchrequestSuccess({
+            requests: result.requests,
+            lastKey: result.lastKey ? result.lastKey : state.requests.searchedrequests.lastRefKey,
+            total: result.total ? result.total : state.requests.searchedrequests.total
           }));
           yield put(setRequestStatus(''));
         }
@@ -208,4 +187,4 @@ function* shopSaga({ type, payload }) {
   }
 }
 
-export default shopSaga;
+export default requestSaga;

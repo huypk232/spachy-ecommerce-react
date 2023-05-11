@@ -107,9 +107,9 @@ const Navigation = () => {
         (store.user.role === "CUSTOMER") && (
           <ul className="navigation-menu-main">
             <li><NavLink activeClassName="navigation-menu-active" exact to={ROUTE.HOME}>Home</NavLink></li>
+            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.MARKET}>Market</NavLink></li>
             <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.FEATURED_PRODUCTS}>Featured</NavLink></li>
             <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
-            <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.WAREHOUSE}>Warehouse</NavLink></li>
             <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.ORDER}>Order</NavLink></li>
           </ul>
         ))

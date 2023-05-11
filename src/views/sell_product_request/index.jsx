@@ -10,14 +10,17 @@ import {
   useWarehouseProducts,
   useSellProductRequest,
   useScrollTop,
+  useProductResolver
 } from '@/hooks';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Select from 'react-select';
 import bannerImg from '@/images/banner-girl-1.png';
+import firebase from '@/services/firebase';
+
 
 const SellProductRequest = () => {
-  useDocumentTitle('Warehouse | Spachy');
+  useDocumentTitle('Request | Spachy');
   useScrollTop();
 
   const {
@@ -26,14 +29,13 @@ const SellProductRequest = () => {
     isLoading,
     error
   } = useSellProductRequest();
-  
-  
+
   return (
     <main className="content">
       <div className="featured">
         <div className="banner">
           <div className="banner-desc">
-            <h1>Warehouse Products</h1>
+            <h1>Product Request</h1>
           </div>
           <div className="banner-img">
             <img src={bannerImg} alt="" />

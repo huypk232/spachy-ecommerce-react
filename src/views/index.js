@@ -20,6 +20,7 @@ export { default as PersonalShop} from './personal_shop/PersonalShop';
 export { default as UpsertShop } from './personal_shop/UpsertShop';
 export { default as ViewProduct } from './view_product';
 export { default as ViewWarehouse } from './warehouse';
-export { default as Order } from './order';
+export { default as Order } from './order/OrderList';
+export { default as OrderDetail } from './order/OrderDetail';
 export { default as SellProductRequest } from './sell_product_request';
 

@@ -10,4 +10,7 @@ export { default as useScrollTop } from './useScrollTop';
 export { default as useShop } from './useShop';
 export { default as useWarehouseProducts } from './useWarehouseProducts';
 export { default as useSellProductRequest } from './useSellProductRequest';
+export { default as useProductResolver } from './useProductResolver';
+export { default as useOrders } from './useOrders';
+
 

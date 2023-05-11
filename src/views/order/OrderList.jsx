@@ -1,13 +1,13 @@
 import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
 import { ColorChooser, ImageLoader, MessageDisplay } from '@/components/common';
-import { ProductShowcaseGrid } from '@/components/product';
+import { OrderList } from '@/components/order';
 import { WAREHOUSE, SHOP } from '@/constants/routes';
 import { displayMoney } from '@/helpers/utils';
 import {
   useBasket,
   useDocumentTitle,
   useProduct,
-  useWarehouseProducts,
+  useOrders,
   useScrollTop,
   useShop
 } from '@/hooks';
@@ -16,24 +16,23 @@ import { Link, useParams } from 'react-router-dom';
 import Select from 'react-select';
 import bannerImg from '@/images/banner-girl-1.png';
 
-const ViewWarehouse = () => {
-  useDocumentTitle('Warehouse | Spachy');
+const UserOrderList = () => {
+  useDocumentTitle('Order List | Spachy');
   useScrollTop();
 
   const {
-    warehouseProducts,
-    fetchWarehouseProducts,
+    orders,
+    fetchOrders,
     isLoading,
     error
-  } = useWarehouseProducts();
-  // console.log(error);
-  // console.log(isLoading);
+  } = useOrders();
+
   return (
     <main className="content">
       <div className="featured">
         <div className="banner">
           <div className="banner-desc">
-            <h1>Warehouse Products</h1>
+            <h1>Order</h1>
           </div>
           <div className="banner-img">
             <img src={bannerImg} alt="" />
@@ -44,12 +43,12 @@ const ViewWarehouse = () => {
             {(error && !isLoading) ? (
               <MessageDisplay
                 message={error}
-                action={fetchWarehouseProducts}
+                action={fetchOrders}
                 buttonLabel="Try Again"
               />
             ) : (
-              <ProductShowcaseGrid
-                products={warehouseProducts}
+              <OrderList
+                orders={orders}
                 skeletonCount={6}
               />
             )}
@@ -60,4 +59,4 @@ const ViewWarehouse = () => {
   );
 };
 
-export default ViewWarehouse;
+export default UserOrderList;

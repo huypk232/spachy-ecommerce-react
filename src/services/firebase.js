@@ -98,8 +98,8 @@ class Firebase {
     this.db.collection("users").doc(userId).update({ basket: items });
   }
 
-  saveShopProducts = (items, userId) => {
-    this.db.collection("users").doc(userId).field(shop).update({ products: items });
+  saveShopProducts = (items, shopId) => {
+    this.db.collection("shops").doc(shopId).update({ products: items });
   }
 
   setAuthPersistence = () =>
@@ -278,13 +278,41 @@ class Firebase {
     this.db.collection("products").doc(id).update(updates);
 
   removeProduct = (id) => this.db.collection("products").doc(id).delete();
+  
+  addRequest = (product, user, shop) => {
+    this.db.collection("sellProductRequest").doc(user.id).update({ basket: items });
+  }
 
-  // sell product request
-  getVendorRequests = (userId, itemsCount = 100) => 
-    this.db.collection("sellProductRequest")
-    .where("vendorId", "==", userId)
-    .limit(itemsCount)
-    .get();
+  // addUser = (id, user) => this.db.collection("users").doc(id).set(user);
+  // addProduct = (id, product) =>
+  //   this.db.collection("products").doc(id).set(product);
+  getVendorRequests = (userId, itemsCount = 100) => {
+    const res = this.db.collection("sellProductRequest")
+      .where("vendorId", "==", userId)
+      .limit(itemsCount)
+      .get()
+    return res
+  }
+  
+
+  getPartnerRequests = (userId, itemsCount = 100) => {
+    const res = this.db.collection("sellProductRequest")
+      .where("partnerId", "==", userId)
+      .limit(itemsCount)
+      .get()
+    return res
+  }
+
+  // getReferenceProduct = (path) => {
+  //   this.db.ref(pro)
+  // }
+  // const ref = db.ref('server/saving-data/fireblog/posts');
+
+  // // Get the data on a post that has been removed
+  // ref.on('child_removed', (snapshot) => {
+  //   const deletedPost = snapshot.val();
+  //   console.log('The blog post titled \'' + deletedPost.title + '\' has been deleted');
+  // });
 
   // shop
   generateShopKey = () => this.db.collection("shops").doc().id;
@@ -297,6 +325,19 @@ class Firebase {
 
   getUserShop = (shopId) => 
     this.db.collection("shops").doc(shopId).get();
+
+  // order
+  generateOrderKey = () => this.db.collection("orders").doc().id;
+  
+  createOrder = (id, order) => {
+    console.log(order)
+    this.db.collection("orders").doc(id).set(order)
+  }
+
+  getUserOrders = (userId, itemsCount) => 
+    this.db.collection("orders").where("userId", "==", userId).
+      limit(itemsCount).
+      get()
 }
 
 const firebaseInstance = new Firebase();

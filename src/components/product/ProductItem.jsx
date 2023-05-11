@@ -25,22 +25,15 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, isItemOnShop, addTo
     shop: state.shop,
     user: state.auth
   }));
+  
+  const itemOnShop = isItemOnShop ? isItemOnShop(product.id) : false;
+  const handleAddToShop = () => {
+    if (addToShop) addToShop({ ...product, selectedSize: product.sizes[0] })
+  };
 
   const itemOnBasket = isItemOnBasket ? isItemOnBasket(product.id) : false;
   const handleAddToBasket = () => {
     if (addToBasket) addToBasket({ ...product, selectedSize: product.sizes[0] });
-  };
-
-  const itemOnShop = isItemOnShop ? isItemOnShop(product.id) : false;
-  const handleAddToShop = () => {
-    if (addToShop) addToShop({ ...product, selectedSize: product.sizes[0] })
-    // call api
-    // console.log("hello")
-    // useEffect(() => {
-    //   if (didMount && firebase.auth.currentUser && shop?.products?.length !== 0) {
-    //     firebase.saveSellerShopProducts(shop.products, shop?.id)
-    //   }
-    // }, [shop?.products?.length]);
   };
 
   
@@ -81,7 +74,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, isItemOnShop, addTo
             </h4>
           </div>
         </div>
-        {product.id && (
+        {((user.role === "PARTNER") && product.id && (
           <div>
             <button
               className={`product-card-button button-small button button-block ${itemOnShop ? 'button-border button-border-gray' : ''}`}
@@ -98,7 +91,17 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, isItemOnShop, addTo
               {itemOnBasket ? 'Remove from Basket' : 'Add to Basket'}
             </button>
           </div>
-        )}
+        )) || ((user.role !== "PARTNER") && product.id && (
+          <div>
+            <button
+              className={`product-add-to-shop-button button-small button button-block ${itemOnBasket ? 'button-border button-border-gray' : ''}`}
+              onClick={handleAddToBasket}
+              type="button"
+            >
+              {itemOnBasket ? 'Remove from Basket' : 'Add to Basket'}
+            </button>
+          </div>
+        ))}
       </div>
     </SkeletonTheme>
   );

@@ -2,10 +2,11 @@ import { displayActionMessage } from '@/helpers/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToBasket as dispatchAddToBasket, removeFromBasket } from '@/redux/actions/basketActions';
 
-const useBasket = () => {
-  const { basket } = useSelector((state) => ({ basket: state.basket }));
+const useCreateRequest = () => {
+  const { shop } = useSelector((state) => ({ basket: state.basket }));
   const dispatch = useDispatch();
-  const isItemOnBasket = (id) => !!basket.find((item) => item.id === id);
+  // console.log("basket:", basket)
+  const isItemHasRequest = (id) => !!basket.find((item) => item.id === id);
   const addToBasket = (product) => {
     if (isItemOnBasket(product.id)) {
       dispatch(removeFromBasket(product.id));
@@ -19,4 +20,4 @@ const useBasket = () => {
   return { basket, isItemOnBasket, addToBasket };
 };
 
-export default useBasket;
+export default useCreateRequest;

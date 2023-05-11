@@ -30,6 +30,10 @@ function* rootSaga() {
     ACTION.UPDATE_EMAIL,
     ACTION.UPDATE_PROFILE
   ], profileSaga);
+  // yield takeLatest([
+  //   ACTION.ADD_TO_SHOP,
+  //   ACTION.REMOVE_FROM_SHOP
+  // ], shopSaga)
 }
 
 export default rootSaga;

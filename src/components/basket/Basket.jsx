@@ -20,7 +20,6 @@ const Basket = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const didMount = useDidMount();
-
   useEffect(() => {
     if (didMount && firebase.auth.currentUser && basket.length !== 0) {
       firebase.saveBasketItems(basket, firebase.auth.currentUser.uid)

@@ -1,41 +1,40 @@
 import { useBasket, useShop } from '@/hooks';
 import PropType from 'prop-types';
 import React, { useState } from 'react';
-import ProductItem from './ProductItem';
+import OrderItem from './OrderItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDocumentTitle, useScrollTop, useDidMount } from '@/hooks';
 import { selectPersonalShopFilter } from '@/selectors/selector';
 
-const ProductGrid = ({ products }) => {
+const OrderGrid = ({ orders }) => {
   const { addToBasket, isItemOnBasket } = useBasket();
   const { addToShop, isItemOnShop } = useShop();
-  console.log("call");
 
   return (
     <div className="product-grid">
-      {products.length === 0 ? new Array(12).fill({}).map((product, index) => (
-        <ProductItem
+      {orders.length === 0 ? new Array(12).fill({}).map((order, index) => (
+        <OrderItem
           // eslint-disable-next-line react/no-array-index-key
           key={`product-skeleton ${index}`}
-          product={product}
+          order={order}
         />
-      )) : products.map((product) => (
-        <ProductItem
-          key={product.id}
+      )) : orders.map((order) => (
+        <OrderItem
+          key={order.id}
           isItemOnBasket={isItemOnBasket}
           addToBasket={addToBasket}
           isItemOnShop={isItemOnShop}
           addToShop={addToShop}
-          product={product}
+          order={order}
         />
       ))}
     </div>
   );
 };
 
-ProductGrid.propTypes = {
+OrderGrid.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  products: PropType.array.isRequired
+  orders: PropType.array.isRequired
 };
 
-export default ProductGrid;
+export default OrderGrid;

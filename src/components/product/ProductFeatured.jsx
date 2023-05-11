@@ -11,7 +11,6 @@ const ProductFeatured = ({ product }) => {
 
     history.push(`/product/${product.id}`);
   };
-  // console.log(product);
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div className="product-display" onClick={onClickItem} role="presentation">

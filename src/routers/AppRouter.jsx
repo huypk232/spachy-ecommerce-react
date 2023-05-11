@@ -1,4 +1,5 @@
 import { Basket } from '@/components/basket';
+import { PersonalShop } from '@/components/shop';
 import { Footer, Navigation } from '@/components/common';
 import * as ROUTES from '@/constants/routes';
 import { createBrowserHistory } from 'history';
@@ -18,6 +19,7 @@ const AppRouter = () => (
     <>
       <Navigation />
       <Basket />
+      <PersonalShop />
       <Switch>
         <Route
           component={view.Search}
@@ -68,6 +70,10 @@ const AppRouter = () => (
           component={view.Order}
           exact
           path={ROUTES.ORDER}
+        />
+        <Route
+          component={view.OrderDetail}
+          path={ROUTES.ORDER_DETAIL}
         />
         <Route
           component={view.SellProductRequest}

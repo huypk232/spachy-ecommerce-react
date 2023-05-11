@@ -10,12 +10,10 @@ import {
 } from 'react-router-dom';
 import { getUserShop } from '@/redux/actions/shopActions';
 
-const PersonalShop = (s) => {
+const PersonalShop = () => {
   useDocumentTitle('My Shops | Spachy');
   useScrollTop();
 
-  // const [user, setUser] = useState(null)
-  // const [shop, setShop] = useState()
   const [isFetching, setFetching] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -29,11 +27,10 @@ const PersonalShop = (s) => {
     products: state.products,
     requestStatus: state.app.requestStatus,
     isLoading: state.app.loading,
-    shop: state.auth.shop,
+    shop: state.shop,
     user: state.auth,
     isAuthenticating: state.app.isAuthenticating,
   }));
-  
 
   const onClickLink = (e) => {
     if (store.isAuthenticating) e.preventDefault();
@@ -60,7 +57,7 @@ const PersonalShop = (s) => {
           </div>
         ) : (
           // ((store.shop === undefined) ? (
-          ((store.shop.products.length !== 0) ? (
+          ((store.shop.products.length === 0) ? (
             <div className="loader">
             <h3>Your shop has no product yet! Wanna choose some?</h3>            
             <Link onClick={onClickLink} to="/recommended">

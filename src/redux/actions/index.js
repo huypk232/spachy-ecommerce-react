@@ -5,5 +5,6 @@ export * as filterActions from './filterActions';
 export * as miscActions from './miscActions';
 export * as productActions from './productActions';
 export * as profileActions from './profileActions';
+export * as shopActions from './shopActions';
 export * as userActions from './userActions';
 

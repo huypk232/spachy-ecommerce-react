@@ -1,56 +1,59 @@
 import { useDidMount } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useProduct from './useProduct';
+
 import firebase from '@/services/firebase';
 
-const useSellProductRequest = (itemsCount) => {
-  const [warehouseProducts, setWarehouseProducts] = useState([]);
+const useOrders = (itemsCount) => {
+  const [orders, setOrders] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const didMount = useDidMount(true);
 
   const { user } = useSelector((state) => ({ user: state.auth }));
-  const fetchWarehouseProducts = async () => {
+  const fetchOrders = async () => {
     try {
       setLoading(true);
       setError('');
 
-      const docs = await firebase.getVendorRequests(user.id, itemsCount)
+      const docs = await firebase.getUserOrders(user.id, itemsCount);
+        
       if (docs.empty) {
         if (didMount) {
-          setError('No request found.');
+          setError('You have no orders');
           setLoading(false);
         }
       } else {
+
         const items = [];
+
         docs.forEach((snap) => {
-          let data = snap.data()
+          const data = snap.data();
           items.push({ id: snap.ref.id, ...data });
         });
 
         if (didMount) {
-          setWarehouseProducts(items);
+          setOrders(items);
           setLoading(false);
         }
       }
     } catch (e) {
       if (didMount) {
-        setError('Failed to fetch request');
+        setError('Failed to fetch products in this warehouse');
         setLoading(false);
       }
     }
   };
 
   useEffect(() => {
-    if (warehouseProducts.length === 0 && didMount) {
-      fetchWarehouseProducts();
+    if (orders.length === 0 && didMount) {
+      fetchOrders();
     }
   }, []);
-
+  
   return {
-    warehouseProducts, fetchWarehouseProducts, isLoading, error
+    orders, fetchOrders, isLoading, error
   };
 };
 
-export default useSellProductRequest;
+export default useOrders;
