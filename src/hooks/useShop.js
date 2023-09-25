@@ -7,7 +7,6 @@ const useShop = () => {
     shop: state.shop,
     user: state
   }));
-  console.log("add to shop");
   const dispatch = useDispatch();
   const isItemOnShop = (id) => !!shop.products?.find((item) => item.id === id);
   const addToShop = (product) => {

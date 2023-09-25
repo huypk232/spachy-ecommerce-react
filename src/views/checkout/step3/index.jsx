@@ -54,14 +54,6 @@ const Payment = ({ shipping, payment, subtotal }) => {
   const onConfirm = () => {
     displayActionMessage('Order has created');
     console.log("wht")
-
-    // const key = firebase.generateKey
-    // const order = {
-    //   "basket": basket,
-    //   "userId": user.id
-    // } 
-    // firebase.createOrder(key, order)
-    // firebase.saveBasketItems(null, user.id)
     history.push(ORDER)
   };
 

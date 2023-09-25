@@ -20,7 +20,9 @@ const PersonalShop = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const didMount = useDidMount();
+  
   useEffect(() => {
+    console.log(shop) 
     if (didMount && firebase.auth.currentUser && shop.products.length !== 0) {
       firebase.saveShopProducts(shop.products, user.shopId)
     }

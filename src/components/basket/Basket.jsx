@@ -21,14 +21,9 @@ const Basket = () => {
   const dispatch = useDispatch();
   const didMount = useDidMount();
   useEffect(() => {
+    console.log(basket)
     if (didMount && firebase.auth.currentUser && basket.length !== 0) {
       firebase.saveBasketItems(basket, firebase.auth.currentUser.uid)
-        // .then(() => {
-        //   console.log('Item saved to basket');
-        // })
-        // .catch((e) => {
-        //   console.log(e);
-        // });
     }
   }, [basket.length]);
 

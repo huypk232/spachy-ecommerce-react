@@ -9,7 +9,6 @@ import { selectPersonalShopFilter } from '@/selectors/selector';
 const ProductGrid = ({ products }) => {
   const { addToBasket, isItemOnBasket } = useBasket();
   const { addToShop, isItemOnShop } = useShop();
-  console.log("call");
 
   return (
     <div className="product-grid">

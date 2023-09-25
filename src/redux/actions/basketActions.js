@@ -11,7 +11,6 @@ export const setBasketItems = (items = []) => ({
 });
 
 export const addToBasket = (product) => {
-  // console.log(product)
   return ({
     type: ADD_TO_BASKET,
     payload: product

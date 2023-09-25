@@ -23,8 +23,11 @@ export default (state = initState, action) => {
       if (state.products.some((product) => product.id === action.payload.id)) {
         return state
       }
-      state.products = [action.payload, ... state.products]
-      return state
+      return {
+        ...state, 
+        products: [action.payload, ...state.products]
+      }
+
     case ADD_SHOP:
       if (state.products.some((product) => product.id === action.payload.id)) {
         return state
@@ -39,8 +42,10 @@ export default (state = initState, action) => {
       return state
     case REMOVE_FROM_SHOP:
       const remainProducts = state.products.filter((product) => product.id !== action.payload);
-      state.products = remainProducts;
-      return state
+      return {
+        ...state, 
+        products: [...remainProducts]
+      }
     default:
       return state;
   }

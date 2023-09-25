@@ -25,7 +25,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, isItemOnShop, addTo
     shop: state.shop,
     user: state.auth
   }));
-  
+
   const itemOnShop = isItemOnShop ? isItemOnShop(product.id) : false;
   const handleAddToShop = () => {
     if (addToShop) addToShop({ ...product, selectedSize: product.sizes[0] })
@@ -33,6 +33,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, isItemOnShop, addTo
 
   const itemOnBasket = isItemOnBasket ? isItemOnBasket(product.id) : false;
   const handleAddToBasket = () => {
+
     if (addToBasket) addToBasket({ ...product, selectedSize: product.sizes[0] });
   };
 
